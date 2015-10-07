@@ -1,5 +1,5 @@
 # This folder contains all answers to database questions in leetcode
-175	Combine Two Tables	33.6%	Easy
+175	Combine Two Tables	33.6%	Easy \n
 176	Second Highest Salary	24.4%	Easy
 177	Nth Highest Salary	16.0%	Medium
 178	Rank Scores	23.4%	Medium
