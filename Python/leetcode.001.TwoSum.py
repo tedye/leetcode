@@ -1,11 +1,13 @@
-class Solution:
-    # @param {integer[]} nums
-    # @param {integer} target
-    # @return {integer[]}
+class Solution(object):
     def twoSum(self, nums, target):
-        if not nums: return []
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
         d = {}
-        for i,num in enumerate(nums):
-            if target-num in d:
-                return [d[target-num]+1,i+1]
-            d[num] = i
+        for i, n in enumerate(nums):
+            if target-n in d:
+                return [d[target-n], i + 1]
+            else:
+                d[n] = i + 1
