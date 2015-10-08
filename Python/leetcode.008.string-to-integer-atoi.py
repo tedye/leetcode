@@ -1,6 +1,4 @@
 class Solution(object):
-    def __init__(self):
-        self.transition_matrix = []
     def myAtoi(self, str):
         """
         :type str: str
