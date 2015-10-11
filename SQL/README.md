@@ -1,4 +1,7 @@
-# This folder contains all answers to database questions in leetcode
+# [leetcode SQL](https://leetcode.com/problemset/database/)
+
+![progress](https://img.shields.io/badge/progress-13%20%2F%2013%20-green.svg)
+
 [175	Combine Two Tables	33.6%	Easy](https://leetcode.com/problems/combine-two-tables/)
 
 [176	Second Highest Salary	24.4%	Easy](https://leetcode.com/problems/second-highest-salary/)
