@@ -1,4 +1,4 @@
-# leetcode
+# [leetcode](https://leetcode.com/)
 ![Language](https://img.shields.io/badge/language-Python%20-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![author](https://img.shields.io/badge/author-tedye-blue.svg)
