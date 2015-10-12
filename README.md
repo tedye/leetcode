@@ -12,6 +12,6 @@ Leetcode Solutions for 291 exercises including [premium questions](https://leetc
 
 Status as at Oct 11, 2015
 
-![algorithm](https://img.shields.io/badge/algorithm-271%20%2F%20274%20-66ccff.svg)
+![algorithm](https://img.shields.io/badge/algorithm-273%20%2F%20275%20-66ccff.svg)
 ![SQL](https://img.shields.io/badge/SQL-13%20%2F%2013%20-green.svg)
 ![Shell](https://img.shields.io/badge/Shell-4%20%2F%204%20-green.svg)
