@@ -4,14 +4,21 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![author](https://img.shields.io/badge/author-tedye-blue.svg)
 
+Status as at Oct 12, 2015
+
+![algorithm](https://img.shields.io/badge/algorithm-275%20%2F%20275%20-green.svg)
+![SQL](https://img.shields.io/badge/SQL-13%20%2F%2013%20-green.svg)
+![Shell](https://img.shields.io/badge/Shell-4%20%2F%204%20-green.svg)
+
 Leetcode Solutions for 291 exercises including [premium questions](https://leetcode.com/book/).
 
 ```python
-# under construction...
+# Code upload complete...
+# will keep on upload better solution
+# start to post explanations in my blog
 ```
+If you are looking for explanantion, please visit my personal blog:
 
-Status as at Oct 11, 2015
+#[Ye's TreeHouse](http://yefangliang.com)
 
-![algorithm](https://img.shields.io/badge/algorithm-273%20%2F%20275%20-66ccff.svg)
-![SQL](https://img.shields.io/badge/SQL-13%20%2F%2013%20-green.svg)
-![Shell](https://img.shields.io/badge/Shell-4%20%2F%204%20-green.svg)
+
