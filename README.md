@@ -10,7 +10,7 @@ Status as at Oct 12, 2015
 ![SQL](https://img.shields.io/badge/SQL-13%20%2F%2013%20-green.svg)
 ![Shell](https://img.shields.io/badge/Shell-4%20%2F%204%20-green.svg)
 
-Leetcode Solutions for 291 exercises including [premium questions](https://leetcode.com/book/).
+Leetcode Solutions for algorithm/database/shell exercises including [premium questions](https://leetcode.com/book/).
 
 ```python
 # Code upload complete...
