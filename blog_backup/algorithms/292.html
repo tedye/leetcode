@@ -1,16 +1,34 @@
 <strong><a href="http://leetcode.com/problems/nim-game/" target="_blank">Question</a></strong>
-<blockquote>
+<blockquote>You are playing the following Nim Game with your friend: There is a heap of stones on the table, each time one of you take turns to remove 1 to 3 stones. The one who removes the last stone will be the winner. You will take the first turn to remove the stones.
 
+Both of you are very clever and have optimal strategies for the game. Write a function to determine whether you can win the game given the number of stones in the heap.
+
+For example, if there are 4 stones in the heap, then you will never win the game: no matter 1, 2, or 3 stones you remove, the last stone will always be removed by your friend.
+
+<b>Hint:</b>
+<ol id="hints">
+    <li class="hint animated fadeInLeft">If there are 5 stones in the heap, could you figure out a way to remove the stones such that you will always be the winner?</li>
+</ol>
 </blockquote>
 <!--more-->
 <strong>Analysis</strong>
+<ol>
+这题简单的讲就是对Mod运算的理解。规则是你和对手每回合可以各自取走1到3颗石头，而拿走最后的石头的人获胜。也就是你完成取石头动作的时候，这堆石头数量变成0。显然如果上一回合结束的时候，石头的颗数是4，那么后手的人，无论如何都可以赢。这个结论递推可适用于石头颗数为任何4的倍数的情况，因为后手的人总可以把石头的颗数维持在4的倍数。而作为先手如果要赢，只要第一回合把石头颗数除以4的余数取走，那么情况就转换成了石头颗数为4倍数，而你是后手的情形，也就是你必胜了。所以简单的讲此题只需要一个mod操作看石头颗数是否不能被4整除即可，即只需要返回 n%4 != 0的bool值 （也可以用 n&3 != 0)。
+</ol>
+
+<ol>
+这题还有一个加强版本，就是如果情况是有几堆石头，你和对手在每回合中按次序可以各自选取其中一堆，并从那里取走至少一颗，至多那堆全部的石头。输入是一个list[int]，输出为先手赢还是输。这个问题有一个很优雅的解（hint: XOR）。</ol>
 
 
 
 <strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.292.nim-game.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#1" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.292.nim-game.py" >
+<pre title="Leetcode#292" class="theme:sublime-text lang:python decode:true " data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.292.nim-game.py">class Solution(object):
+    def canWinNim(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        # basically check if the number can be divided by 4
+        return n&amp;3 != 0
 
-Please in backup code here!
-
-</pre> 
+</pre>
