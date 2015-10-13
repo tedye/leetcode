@@ -1,16 +1,52 @@
 <strong><a href="http://leetcode.com/problems/word-pattern-ii/" target="_blank">Question</a></strong>
-<blockquote>
+<blockquote>Given a<span class="Apple-converted-space"> </span><code>pattern</code><span class="Apple-converted-space"> </span>and a string<span class="Apple-converted-space"> </span><code>str</code>, find if<span class="Apple-converted-space"> </span><code>str</code><span class="Apple-converted-space"> </span>follows the same pattern.
 
-</blockquote>
+Here<span class="Apple-converted-space"> </span><b>follow</b><span class="Apple-converted-space"> </span>means a full match, such that there is a bijection between a letter in<span class="Apple-converted-space"> </span><code>pattern</code><span class="Apple-converted-space"> </span>and a<span class="Apple-converted-space"> </span><b>non-empty</b><span class="Apple-converted-space"> </span>substring in<span class="Apple-converted-space"> </span><code>str</code>.
+
+<b>Examples:</b>
+<ol>
+    <li>pattern =<span class="Apple-converted-space"> </span><code>"abab"</code>, str =<span class="Apple-converted-space"> </span><code>"redblueredblue"</code><span class="Apple-converted-space"> </span>should return true.</li>
+    <li>pattern =<span class="Apple-converted-space"> </span><code>"aaaa"</code>, str =<span class="Apple-converted-space"> </span><code>"asdasdasdasd"</code><span class="Apple-converted-space"> </span>should return true.</li>
+    <li>pattern =<span class="Apple-converted-space"> </span><code>"aabb"</code>, str =<span class="Apple-converted-space"> </span><code>"xyzabcxzyabc"</code><span class="Apple-converted-space"> </span>should return false.</li>
+</ol>
+<b>Notes:</b>
+You may assume both<span class="Apple-converted-space"> </span><code>pattern</code><span class="Apple-converted-space"> </span>and<span class="Apple-converted-space"> </span><code>str</code><span class="Apple-converted-space"> </span>contains only lowercase letters.</blockquote>
 <!--more-->
 <strong>Analysis</strong>
+<ol>
+和leetcode 290 Word Pattern类似，也是需要两个python字典来记录映射关系，只不过加上了要回溯这个难点。实际coding操作上使用递归调用helper方法即可解决。时间复杂度上为O(nm)，其中n、m分别为pattern和words的长度。</ol>
 
 
 
 <strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.291.word-pattern-ii.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#1" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.291.word-pattern-ii.py" >
+<pre title="Leetcode#291" class="theme:sublime-text lang:python decode:true " data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.291.word-pattern-ii.py">
+class Solution(object):
+    def wordPatternMatch(self, pattern, str):
+        """
+        :type pattern: str
+        :type str: str
+        :rtype: bool
+        """
+        return self.helper(pattern, str, 0, 0, {}, {})
 
-Please in backup code here!
+    # use two dictionaries as in wordpattern 
+    def helper(self, pattern, str, i, j, w2p, p2w):
+        if i == len(pattern) and j == len(str):
+            return True
+        elif i < len(pattern) and j < len(str):
+            p = pattern[i]
+            if p in p2w:
+                w = p2w[p]
+                if w == str[j:j+len(w)]:
+                    return self.helper(pattern, str, i + 1, j + len(w), w2p, p2w)
+            else:
+                for k in xrange(j, len(str)):
+                    w = str[j:k+1]
+                    if w not in w2p:
+                        w2p[w], p2w[p] = p, w;
+                        if self.helper(pattern, str, i + 1, k + 1, w2p, p2w):
+                            return True
+                        w2p.pop(w), p2w.pop(p);
+        return False
 
-</pre> 
+</pre>

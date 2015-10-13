@@ -1,16 +1,44 @@
 <strong><a href="http://leetcode.com/problems/word-pattern/" target="_blank">Question</a></strong>
-<blockquote>
+<blockquote>Given a<span class="Apple-converted-space"> </span><code>pattern</code><span class="Apple-converted-space"> </span>and a string<span class="Apple-converted-space"> </span><code>str</code>, find if<span class="Apple-converted-space"> </span><code>str</code><span class="Apple-converted-space"> </span>follows the same pattern.
 
-</blockquote>
+Here<span class="Apple-converted-space"> </span><b>follow</b><span class="Apple-converted-space"> </span>means a full match, such that there is a bijection between a letter in<span class="Apple-converted-space"> </span><code>pattern</code><span class="Apple-converted-space"> </span>and a<span class="Apple-converted-space"> </span><b>non-empty</b><span class="Apple-converted-space"> </span>word in<span class="Apple-converted-space"> </span><code>str</code>.
+
+<b>Examples:</b>
+<ol>
+    <li>pattern =<span class="Apple-converted-space"> </span><code>"abba"</code>, str =<span class="Apple-converted-space"> </span><code>"dog cat cat dog"</code><span class="Apple-converted-space"> </span>should return true.</li>
+    <li>pattern =<span class="Apple-converted-space"> </span><code>"abba"</code>, str =<span class="Apple-converted-space"> </span><code>"dog cat cat fish"</code><span class="Apple-converted-space"> </span>should return false.</li>
+    <li>pattern =<span class="Apple-converted-space"> </span><code>"aaaa"</code>, str =<span class="Apple-converted-space"> </span><code>"dog cat cat dog"</code><span class="Apple-converted-space"> </span>should return false.</li>
+    <li>pattern =<span class="Apple-converted-space"> </span><code>"abba"</code>, str =<span class="Apple-converted-space"> </span><code>"dog dog dog dog"</code><span class="Apple-converted-space"> </span>should return false.</li>
+</ol>
+<b>Notes:</b>
+You may assume<span class="Apple-converted-space"> </span><code>pattern</code><span class="Apple-converted-space"> </span>contains only lowercase letters, and<span class="Apple-converted-space"> </span><code>str</code><span class="Apple-converted-space"> </span>contains lowercase letters separated by a single space.
+
+&nbsp;</blockquote>
 <!--more-->
 <strong>Analysis</strong>
-
+<ol>
+此题考察能否建立一个one-to-one mapping，一一映射关系。最简单就是用两个字典分别保存从pattern到word的映射和从word到pattern的映射，然后对比两个字典的长度是否一致。不一致这说明至少存在一个一对多或者多对一的映射关系。coding的话用python的dict可以轻松解决。时间和空间复杂度都为O(N)。
+</ol>
 
 
 <strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.290.word-pattern.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#1" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.290.word-pattern.py" >
-
-Please in backup code here!
-
-</pre> 
+<pre title="Leetcode#1" class="theme:sublime-text lang:python decode:true " data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.290.word-pattern.py">class Solution(object):
+    def wordPattern(self, pattern, str):
+        """
+        :type pattern: str
+        :type str: str
+        :rtype: bool
+        """
+        # can be solved by two dictionaries
+        a = list(pattern)
+        b = str.split()
+        if len(a) != len(b):
+            return False
+        d1 = {}
+        d2 = {}
+        for i in zip(a,b):
+            d1[i[0]]=i[1]
+            d2[i[1]]=i[0]
+        return len(d1) == len(d2)
+            
+</pre>
