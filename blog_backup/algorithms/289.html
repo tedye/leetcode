@@ -1,16 +1,53 @@
 <strong><a href="http://leetcode.com/problems/game-of-life/" target="_blank">Question</a></strong>
-<blockquote>
+<blockquote>According to the<span class="Apple-converted-space"> </span><a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life" target="_blank">Wikipedia's article</a>: "The<span class="Apple-converted-space"> </span><b>Game of Life</b>, also known simply as<span class="Apple-converted-space"> </span><b>Life</b>, is a cellular automaton devised by the British mathematician John Horton Conway in 1970."
 
+Given a<span class="Apple-converted-space"> </span><i>board</i><span class="Apple-converted-space"> </span>with<span class="Apple-converted-space"> </span><i>m</i><span class="Apple-converted-space"> </span>by<span class="Apple-converted-space"> </span><i>n</i><span class="Apple-converted-space"> </span>cells, each cell has an initial state<span class="Apple-converted-space"> </span><i>live</i><span class="Apple-converted-space"> </span>(1) or<span class="Apple-converted-space"> </span><i>dead</i><span class="Apple-converted-space"> </span>(0). Each cell interacts with its<span class="Apple-converted-space"> </span><a href="https://en.wikipedia.org/wiki/Moore_neighborhood" target="_blank">eight neighbors</a><span class="Apple-converted-space"> </span>(horizontal, vertical, diagonal) using the following four rules (taken from the above Wikipedia article):
+<ol>
+    <li>Any live cell with fewer than two live neighbors dies, as if caused by under-population.</li>
+    <li>Any live cell with two or three live neighbors lives on to the next generation.</li>
+    <li>Any live cell with more than three live neighbors dies, as if by over-population..</li>
+    <li>Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.</li>
+</ol>
+Write a function to compute the next state (after one update) of the board given its current state.
+
+<b>Follow up</b>:<span class="Apple-converted-space"> </span>
+<ol>
+    <li>Could you solve it in-place? Remember that the board needs to be updated at the same time: You cannot update some cells first and then use their updated values to update other cells.</li>
+    <li>In this question, we represent the board using a 2D array. In principle, the board is infinite, which would cause problems when the active area encroaches the border of the array. How would you address these problems?</li>
+</ol>
 </blockquote>
 <!--more-->
 <strong>Analysis</strong>
-
-
+<ol>
+这个问题难的地方不是更新规则，而是如何in place来完成更新。我们可以观察到每个格子值是0或者1，从bit的角度来看，有大量空间被浪费了。所以不妨在把高位用作储存更新状态，完成更新计算后，再把高位通过shift移到低位，完成更新。复杂度为O(nm)，即matrix大小。代码如下。
+</ol>
 
 <strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.289.game-of-life.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#1" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.289.game-of-life.py" >
+<pre title="Leetcode#289" class="theme:sublime-text lang:python decode:true " data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.289.game-of-life.py">class Solution(object):
+    def gameOfLife(self, board):
+        """
+        :type board: List[List[int]]
+        :rtype: void Do not return anything, modify board in-place instead.
+        """
+        # sweep through the matrix
+        m = len(board)
+        if not m:
+            return
+        n = len(board[0])
+        if not n:
+            return
+        
+        for i in range(m):
+            for j in range(n):
+                count = 0
+                for ii in range(max(i-1, 0), min(i+2, m)):
+                    for jj in range(max(j-1, 0), min(j+2, n)):
+                        count += board[ii][jj] &amp; 1
+                if (count == 4 and board[i][j]) or count == 3:
+                    board[i][j] |= 16
 
-Please in backup code here!
-
-</pre> 
+        for i in range(m):
+            for j in range(n):
+                board[i][j] &gt;&gt;= 4
+        
+</pre>
