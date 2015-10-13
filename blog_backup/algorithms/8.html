@@ -1,16 +1,47 @@
-<strong><a href="http://leetcode.com/problems/string-to-integer-atoi/" target="_blank">Question</a></strong>
-<blockquote>
+<strong><a href="https://leetcode.com/problems/string-to-integer-atoi/" target="_blank">Question</a></strong>
 
-</blockquote>
+<blockquote>Implement<span class="Apple-converted-space"> </span>atoi<span class="Apple-converted-space"> </span>to convert a string to an integer.
+
+<b>Hint:</b><span class="Apple-converted-space"> </span>Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+
+<b>Notes:</b><span class="Apple-converted-space"> </span>It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.</blockquote>
+
 <!--more-->
 <strong>Analysis</strong>
-
-
-
+<ol>
+本题主要考察corner case的处理。没有什么难度。代码如下。
+</ol>
 <strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.008.string-to-integer-atoi.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#1" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.008.string-to-integer-atoi.py" >
-
-Please in backup code here!
-
-</pre> 
+<pre title="Leetcode#8" class="theme:sublime-text lang:python decode:true " data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.008.string-to-integer-atoi.py">
+class Solution(object):
+    def myAtoi(self, str):
+        """
+        :type str: str
+        :rtype: int
+        """
+        if not str:
+            return 0
+        str = str.strip()
+        i = 0
+        l = len(str)
+        
+        flag = False
+        if str[i] == '-':
+            flag = True
+            i += 1
+        elif str[i] == '+':
+            i += 1
+        
+        result = 0
+        while i < l and '0' <= str[i] <= '9':
+            result = result * 10 + ord(str[i]) - ord('0')
+            i += 1
+        if not flag and result > 0x7fffffff:
+            return 2147483647
+        elif flag and result > 0x7fffffff+1:
+            return -2147483648
+        if flag:
+            return -result
+        else:
+            return result
+</pre>

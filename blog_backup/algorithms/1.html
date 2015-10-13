@@ -1,16 +1,34 @@
-<strong><a href="http://leetcode.com/problems/two-sum/" target="_blank">Question</a></strong>
-<blockquote>
+<strong><a href="https://leetcode.com/problems/two-sum/" target="_blank">Question</a></strong>
+<blockquote>Given an array of integers, find two numbers such that they add up to a specific target number.
 
-</blockquote>
+The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
+
+You may assume that each input would have exactly one solution.
+
+Input: numbers={2, 7, 11, 15}, target=9
+Output: index1=1, index2=2</blockquote>
 <!--more-->
 <strong>Analysis</strong>
 
+方法一、暴力法
 
+此题容易想到两两配对求和与目标值比较返回结果，但显然配对是多选二的过程，导致算法的时间复杂度为O(N^2)，但好处是除了储存下标的变量不需要额外空间。由此出发优化，可以选择先排序，再对数组从左往右取值，对对应的值进行二分查找,时间复杂度为O(NlogN)。或者排序后，初始化两个指针指向数组头部和尾部，然后根据两个数值和目标值的比较，来决定移动其中一个指针来使得他们的和接近目标值，时间复杂度为O(N)。但是此题要求返回下标，所以找到一对数值有需要回原数组查询原来的下标，其时间复杂度为O(N)。两种优化都需要额外的空间来存储排序有的数组，总体时间复杂度都为O(NlogN),但显然第一种的常数更大。
+
+方法二、hash set
+此题也容易想到用Python中的dict来做（类似Java的HashMap，但Java HashMap只要求作为key的object有hashCode()方法，Python对作为key的object必须hashable，否则会报TypeError）。这里可以边扫数组，边检查当前值的对应值,即target-n，是否已经在dict中了，如果结果为真，那就直接输出结果。否则就把当前值为key，下标+1为value，放入dict。检查这个步骤时间复杂度为O(1),所以总体上这个算法时间复杂度为O(N)。代码如下所见。
 
 <strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.001.TwoSum.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#1" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.001.TwoSum.py" >
-
-Please in backup code here!
-
-</pre> 
+<pre title="Leetcode#1" class="theme:sublime-text lang:python decode:true " data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.001.TwoSum.py">class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        d = {}
+        for i, n in enumerate(nums):
+            if target-n in d:
+                return [d[target-n], i + 1]
+            else:
+                d[n] = i + 1
+</pre>

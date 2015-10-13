@@ -1,16 +1,27 @@
-<strong><a href="http://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank">Question</a></strong>
-<blockquote>
+<strong><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank">Question</a></strong>
 
-</blockquote>
-<!--more-->
+<blockquote>Given a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for "abcabcbb" is "abc", which the length is 3. For "bbbbb" the longest substring is "b", with the length of 1.</blockquote><!--more-->
 <strong>Analysis</strong>
-
-
-
+<ol>本题的主旨在于维护两个分别指向当前最长子串的头部和尾部的index。当发现当前字符存在于当前最长子串之中时，收缩头部的index使之不包含当前字符，更新当前最长子串长度。代码如下所示。</ol>
 <strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.003.Longestsubstringwithoutrepeatingcharacters.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#1" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.003.Longestsubstringwithoutrepeatingcharacters.py" >
-
-Please in backup code here!
-
+<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#3" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.003.Longestsubstringwithoutrepeatingcharacters.py" >
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        d = {}
+        result = 0
+        start = 0
+        end = 0
+        for i in range(len(s)):
+            end += 1
+            if s[i] in d and d[s[i]] >= start:
+                start = d[s[i]] + 1
+            d[s[i]] = i
+            result = max(result, end - start)
+        return result
 </pre> 
+
+

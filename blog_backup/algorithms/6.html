@@ -1,16 +1,44 @@
-<strong><a href="http://leetcode.com/problems/zigzag-conversion/" target="_blank">Question</a></strong>
-<blockquote>
+<strong><a href="https://leetcode.com/problems/zigzag-conversion/" target="_blank">Question</a></strong>
+<blockquote>The string<span class="Apple-converted-space"> </span><code>"PAYPALISHIRING"</code><span class="Apple-converted-space"> </span>is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
+<pre>P   A   H   N
+A P L S I I G
+Y   I   R
+</pre>
+And then read line by line:<span class="Apple-converted-space"> </span><code>"PAHNAPLSIIGYIR"</code>
 
-</blockquote>
+Write the code that will take a string and make this conversion given a number of rows:
+<pre>string convert(string text, int nRows);</pre>
+<code>convert("PAYPALISHIRING", 3)</code><span class="Apple-converted-space"> </span>should return<span class="Apple-converted-space"> </span><code>"PAHNAPLSIIGYIR"</code>.</blockquote>
 <!--more-->
 <strong>Analysis</strong>
 
+<ol>
+此题比较容易。首先制作一个空字符串的list，然后用一个写指针来回扫的同时逐个写入字符。最后用join方法，把list里的字符串重新串成一串。显然复杂度为字符串长度O(n)。代码如下。
+</ol>
 
 
 <strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.006.zigzag-conversion.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#1" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.006.zigzag-conversion.py" >
-
-Please in backup code here!
-
-</pre> 
+<pre title="Leetcode#1" class="theme:sublime-text lang:python decode:true " data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.006.zigzag-conversion.py">
+class Solution(object):
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        if numRows == 1:
+            return s
+        result = [''] * numRows
+        ind = 0
+        direction = 1
+        for i in range(len(s)):
+            result[ind] += s[i]
+            ind += direction
+            if ind == -1:
+                direction = 1
+                ind = 1
+            if ind == numRows:
+                direction = -1
+                ind = numRows - 2
+        return ''.join(result)
+</pre>

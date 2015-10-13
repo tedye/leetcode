@@ -1,16 +1,36 @@
-<strong><a href="http://leetcode.com/problems/longest-palindromic-substring/" target="_blank">Question</a></strong>
-<blockquote>
+<strong><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank">Question</a></strong>
 
-</blockquote>
-<!--more-->
+<blockquote>Given a string S, find the longest palindromic substring in S. You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.</blockquote><!--more-->
 <strong>Analysis</strong>
+<ol>最长回文子串最常见的可以用Manacher algorithm，时间复杂度为O(n),也可以用suffix tree后缀树来做。对于前者，比较容易理解，首先我们对字符串进行特殊处理，即在每个字符中间加入一个特殊的字符比如说‘#’。这样我们就使用一个数组在储存以当前位置为中心的回文子串，而无须担心最长回文子串的奇偶性。当在当前的最大回文子串的范围内时，我们可以利用对称性质来，来减少重复的字符比较。代码如下所示。</ol>
+<strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.005.longest-palindromic-substring.py" target="_blank">Code</a></strong> 
 
-
-
-<strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.005.longest-palindromic-substring.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#1" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.005.longest-palindromic-substring.py" >
-
-Please in backup code here!
-
+<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#5" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.005.longest-palindromic-substring.py" >
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        dp = [0] * 2001
+        new_string = '#'
+        for c in s:
+            new_string += c
+            new_string += '#'
+        i = 0
+        l = len(new_string)
+        rightbound = 0 # current maximum length palindrome rightbound index
+        currentMax = 0 # length of wing - current maximum length palindrome
+        currentMaxInd = 0 # current maximum length palindrome center
+        while i < l:
+            if i <= rightbound:
+                dp[i] = min(rightbound - i, dp[currentMaxInd * 2 - i])
+            while i - dp[i] > 0 and i + dp[i] < l-1 and new_string[i-dp[i]-1] == new_string[i+dp[i]+1]:
+                dp[i] += 1
+            if dp[i] > currentMax:
+                currentMax = dp[i]
+                currentMaxInd = i
+                rightbound = i+dp[i]
+            i += 1
+        return ''.join(new_string[currentMaxInd-currentMax+1: currentMaxInd+currentMax].split('#'))
 </pre> 

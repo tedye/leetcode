@@ -1,16 +1,48 @@
-<strong><a href="http://leetcode.com/problems/median-of-two-sorted-arrays/" target="_blank">Question</a></strong>
-<blockquote>
-
-</blockquote>
-<!--more-->
+<strong><a href="https://leetcode.com/problems/median-of-two-sorted-arrays/" target="_blank">Question</a></strong>
+<blockquote>There are two sorted arrays nums1 and nums2 of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</blockquote><!--more-->
 <strong>Analysis</strong>
+<ol>本题比较tricky。首先要考虑nums1和nums2加起来的长度的奇偶性，如果是奇数，那么中位数是第(m+n) // 2个数；如果是偶数， 那么中位数则为第(m+n)//2个数和第(m+n)//2 - 1个数的平均值。然后问题就一般化为如何求两组排好序的数组中第K个元素。看到要求里面要时间复杂度为O(log(m+n)),可以联想下二分法或者递归的思路，也就是说每次循环我们必须要可以舍弃一部分固定比例的搜索空间，从而来达到log增长渐进的时间复杂度。
 
+假设我们要取得第K个数， 则可以先计算对于两组数组总长度的K，在各自数组里面对应的位置K1和K2使得K1+K2=K且K1/m=K2/n=K/(m+n)。然后我们比较K1和K2在各自两个数组中对应的数的大小。如果nums1[K1] &gt; nums2[K2]，那么我们可以舍去nums2中比K2小的（包括K2）的所有数字，同时我们也可以舍去nums1中比K1大的所有数字, 因为中位数肯定比K2大，小于等于K1，不要忘记更新K。如果nums1[K1] &lt;= nums2[K2],则同理。最后考虑base cases，数组一或者二已经舍弃光了，或者K==0。
 
+代码如下所示。</ol>
+<strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.004.median-of-two-sorted-arrays.py" target="_blank">Code</a></strong> 
 
-<strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.004.median-of-two-sorted-arrays.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#1" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.004.median-of-two-sorted-arrays.py" >
-
-Please in backup code here!
-
+<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#4" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.004.median-of-two-sorted-arrays.py" >
+class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+        l1 = len(nums1)
+        l2 = len(nums2)
+        l = l1+l2
+        if l & 1:
+            return 1.0 * self.getKth(nums1, 0, l1-1, nums2, 0, l2-1, l//2)
+        else:
+            return 0.5 * (self.getKth(nums1, 0, l1-1, nums2, 0, l2-1, l//2)+self.getKth(nums1, 0, l1-1, nums2, 0, l2-1, l//2 - 1))
+    
+    def getKth(self, n1, s1, e1, n2, s2, e2, k):
+        l1 = e1 - s1 + 1
+        l2 = e2 - s2 + 1
+        if l1 == 0:
+            return n2[s2+k]
+        if l2 == 0:
+            return n1[s1+k]
+        if k == 0:
+            return min(n1[s1], n2[s2])
+        
+        ind1 = (l1 * k) // (l1+l2)
+        ind2 = k - ind1 - 1
+        if n1[s1+ind1] < n2[s2+ind2]:
+            s1 += ind1 + 1
+            e2 = s2 + ind2
+            k -= ind1 + 1
+        else:
+            s2 += ind2 + 1
+            e1 = s1 + ind1
+            k -= ind2 + 1
+        return self.getKth(n1, s1, e1, n2, s2, e2, k)
 </pre> 

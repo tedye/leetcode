@@ -1,16 +1,45 @@
-<strong><a href="http://leetcode.com/problems/add-two-numbers/" target="_blank">Question</a></strong>
-<blockquote>
+<strong><a href="https://leetcode.com/problems/add-two-numbers/" target="_blank">Question</a></strong>
+<blockquote>You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
 
-</blockquote>
+Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)
+Output: 7 -&gt; 0 -&gt; 8</blockquote>
 <!--more-->
 <strong>Analysis</strong>
-
-
-
+<ol>
+本题十分直接明了，线性时间复杂度。由于每个链表的节点只储存一位数，所以需要记录每个节点求和产生的carry，被下一层求和所用。本题可以取巧的地方是，当其中一个链表到达最底层的节点的时候，只需把另一个链表剩下的接上返回链表的头即可， 但是考虑到Python函数除了primitive传值，其他都是传参的，所以最好还是做个新的链表来返回。代码如下所示。
+</ol>
 <strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.002.Addtwonumbers.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#1" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.002.Addtwonumbers.py" >
 
-Please in backup code here!
+<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#2" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.002.Addtwonumbers.py" >
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
 
+class Solution(object):
+    def addTwoNumbers(self, l1, l2):
+        """
+        :type l1: ListNode
+        :type l2: ListNode
+        :rtype: ListNode
+        """
+        carry = 0
+        dummy = ListNode(-1)
+        temp = dummy
+        while carry or l1 or l2:
+            op1 = op2 = 0
+            if l1:
+                op1 = l1.val
+                l1 = l1.next
+            if l2:
+                op2 = l2.val
+                l2 = l2.next
+            s = op1+op2+carry
+            carry = s//10
+            s %=10
+            temp.next = ListNode(s)
+            temp = temp.next
+            
+        return dummy.next
 </pre> 
