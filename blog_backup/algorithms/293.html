@@ -1,0 +1,35 @@
+<strong><a href="http://leetcode.com/problems/flip-game/" target="_blank">Question</a></strong>
+<blockquote>You are playing the following Flip Game with your friend: Given a string that contains only these two characters:<span class="Apple-converted-space"> </span><code>+</code><span class="Apple-converted-space"> </span>and<span class="Apple-converted-space"> </span><code>-</code>, you and your friend take turns to flip two<b>consecutive</b><span class="Apple-converted-space"> </span><code>"++"</code><span class="Apple-converted-space"> </span>into<span class="Apple-converted-space"> </span><code>"--"</code>. The game ends when a person can no longer make a move and therefore the other person will be the winner.
+
+Write a function to compute all possible states of the string after one valid move.
+
+For example, given<span class="Apple-converted-space"> </span><code>s = "++++"</code>, after one move, it may become one of the following states:
+<pre>[
+  "--++",
+  "+--+",
+  "++--"
+]
+</pre>
+If there is no valid move, return an empty list<span class="Apple-converted-space"> </span><code>[]</code>.</blockquote>
+<!--more-->
+<strong>Analysis</strong>
+这题很容易，过一遍检查连续两个符号是否为“++”即可，输出符合条件的字符串。时间复杂度为O(N)。代码如下。
+
+
+<strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.293.flip-game.py" target="_blank">Code</a></strong>
+<pre title="Leetcode#293" class="theme:sublime-text lang:python decode:true " data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.293.flip-game.py">
+class Solution(object):
+    def generatePossibleNextMoves(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        result = []
+        if not s:
+            return result
+        for i in range(len(s)-1):
+            if s[i] == '+' and s[i+1] == '+':
+                result += s[:i]+'--'+s[i+2:],
+        return result
+                
+</pre>
