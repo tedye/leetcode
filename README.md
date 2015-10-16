@@ -4,9 +4,9 @@
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![author](https://img.shields.io/badge/author-tedye-blue.svg)
 
-Status as at Oct 12, 2015
+Status as at Oct 15, 2015
 
-![algorithm](https://img.shields.io/badge/algorithm-275%20%2F%20275%20-green.svg)
+![algorithm](https://img.shields.io/badge/algorithm-276%20%2F%20276%20-green.svg)
 ![SQL](https://img.shields.io/badge/SQL-13%20%2F%2013%20-green.svg)
 ![Shell](https://img.shields.io/badge/Shell-4%20%2F%204%20-green.svg)
 
