@@ -48,7 +48,7 @@ class leetcode_submission_crawler(object):
         trs = tb.findAll('tr')
         for row in trs:
             tds = row.findAll('td')
-            print('found', tds[1].text.strip(), tds[2].text.strip())
+            print('found', tds[1].text.strip(), tds[2].text.strip(), url_prefix + tds[2].find('a')['href'])
             self.problem_url_list += [tds[1].text.strip(), tds[2].text.strip(), url_prefix + tds[2].find('a')['href']],
         if self.problem_url_list:
             return True
@@ -63,7 +63,8 @@ class leetcode_submission_crawler(object):
     def get_leetcode_submission_records(self, languange = 'python'):
         if not self.problem_url_list:
             print('no url list exist!\n')
-        for number, name, url in self.problem_url_list:
+        for number, name, url in self.problem_url_list[0:]:
+            print(number,name, url)
             if len(number) == 1:
                 countNumber = '00'+number
             elif len(number) == 2:
@@ -72,6 +73,7 @@ class leetcode_submission_crawler(object):
                 countNumber = number
             print('access problem '+countNumber+' '+name)
             submission_url = url + 'submissions/'
+            print(submission_url)
             response = self.session.get(submission_url)
             response.encoding = 'utf-8'
             tbs = BeautifulSoup(response.text).findAll('table')
@@ -87,7 +89,7 @@ class leetcode_submission_crawler(object):
                 href = entry['href']
                 if accept_status != 'Accepted':
                     continue
-                solution_url = 'https://leetcode.com/' + href
+                solution_url = 'https://leetcode.com' + href
                 solution_response = self.session.get(solution_url)
                 # print(solution_response.text)
                 solution_response.encoding = 'utf-8'
@@ -101,7 +103,7 @@ class leetcode_submission_crawler(object):
                 for line in script.split('\n'):
                     target = 'vm.code.'+languange
                     if target in line:
-                        text_str = eval(line[len(target)+7:-1])
+                        text_str = ''.join([line for line in eval(line[len(target)+7:-1]).split('\n') if line])
                         # print(text_str)
                         file_name = directory+'/leetcode.' + countNumber+'.'+name+'.submission'+str(i)+'.py'
                         print('writing file to ./'+file_name)
@@ -111,8 +113,8 @@ class leetcode_submission_crawler(object):
 if __name__ == '__main__':
     #----------------------------------------------------------------------------------------------#
     login_url = 'https://leetcode.com/accounts/login/'
-    username = 'your_username'
-    password = 'your_password'
+    username = 'username' # your user name
+    password = 'password' # your password
     # for headers, cookies and data, you should also use your own.
     # to get these, please follow the steps in my blog:
     # http://yefangliang.com/?p=5931
@@ -127,14 +129,14 @@ if __name__ == '__main__':
     cookies = {
         '__atuvc': '0%7C17%2C0%7C18%2C0%7C19%2C0%7C20%2C1%7C21',
         '_gat': '1',
-        'csrftoken': 'xr9BWUq5xVtgec4HOWfPE3sr1PzXMU7X',
+        'csrftoken': 'Sw138wkoljbpMuwTUba6tNVGAOyLZIVa',
         '_ga': 'GA1.2.1699599603.1427126517'
     }
 
     data = dict(
         login=username, 
         password=password,
-        csrfmiddlewaretoken='xr9BWUq5xVtgec4HOWfPE3sr1PzXMU7X')
+        csrfmiddlewaretoken='Sw138wkoljbpMuwTUba6tNVGAOyLZIVa')
     #----------------------------------------------------------------------------------------------#
     test_clawer = leetcode_submission_crawler(login_url, username, password, headers, cookies, data)
     test_clawer.get_leetcode_submission_records(languange='python')

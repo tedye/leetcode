@@ -1,29 +1,1 @@
-class Solution:
-    # @param {integer[]} nums
-    # @param {integer} target
-    # @return {integer}
-    def search(self, nums, target):
-        if not nums: return False
-        l = 0
-        r = len(nums) - 1
-        
-        while l <= r:
-            mid = (l+r) // 2
-            x = nums[mid]
-            if x == target:
-                return mid
-            if x == nums[l]:
-                l += 1
-            elif x < nums[l]:
-                if x < target <= nums[r]:
-                    l = mid + 1
-                else:
-                    r = mid - 1
-            else:
-                if nums[l] <= target < x:
-                    r = mid - 1
-                else:
-                    l = mid + 1
-                
-        return -1
-        
+class Solution:    # @param {integer[]} nums    # @param {integer} target    # @return {integer}    def search(self, nums, target):        if not nums: return False        l = 0        r = len(nums) - 1                while l <= r:            mid = (l+r) // 2            x = nums[mid]            if x == target:                return mid            if x == nums[l]:                l += 1            elif x < nums[l]:                if x < target <= nums[r]:                    l = mid + 1                else:                    r = mid - 1            else:                if nums[l] <= target < x:                    r = mid - 1                else:                    l = mid + 1                        return -1        
