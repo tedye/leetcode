@@ -115,7 +115,7 @@ if __name__ == '__main__':
     password = 'your_password'
     # for headers, cookies and data, you should also use your own.
     # to get these, please follow the steps in my blog:
-    # http://yefangliang.com
+    # http://yefangliang.com/?p=5931
     #----------------------------------------------------------------------------------------------#
     headers = {
         'Referer': "https://leetcode.com/accounts/login/",
