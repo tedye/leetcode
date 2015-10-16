@@ -33,7 +33,7 @@ class leetcode_submission_crawler(object):
 
     def log_in(self):
         response = self.session.post(self.login_url, data = self.data, headers = self.headers, cookies = self.cookies)
-        print(response.text)
+        # print(response.text)
         if 'Sign out' in str(response.text):
             return True
         return False
@@ -109,12 +109,14 @@ class leetcode_submission_crawler(object):
                         break
 
 if __name__ == '__main__':
+    #----------------------------------------------------------------------------------------------#
     login_url = 'https://leetcode.com/accounts/login/'
     username = 'your_username'
     password = 'your_password'
     # for headers, cookies and data, you should also use your own.
     # to get these, please follow the steps in my blog:
     # http://yefangliang.com
+    #----------------------------------------------------------------------------------------------#
     headers = {
         'Referer': "https://leetcode.com/accounts/login/",
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -133,7 +135,7 @@ if __name__ == '__main__':
         login=username, 
         password=password,
         csrfmiddlewaretoken='xr9BWUq5xVtgec4HOWfPE3sr1PzXMU7X')
-
+    #----------------------------------------------------------------------------------------------#
     test_clawer = leetcode_submission_crawler(login_url, username, password, headers, cookies, data)
     test_clawer.get_leetcode_submission_records(languange='python')
 
