@@ -1,16 +1,36 @@
 <strong><a href="https://leetcode.com/problems/flip-game-ii/" target="_blank">Question</a></strong>
-<blockquote>
+<blockquote>You are playing the following Flip Game with your friend: Given a string that contains only these two characters:<span class="Apple-converted-space"> </span><code>+</code><span class="Apple-converted-space"> </span>and<span class="Apple-converted-space"> </span><code>-</code>, you and your friend take turns to flip two <b>consecutive</b><span class="Apple-converted-space"> </span><code>"++"</code><span class="Apple-converted-space"> </span>into<span class="Apple-converted-space"> </span><code>"--"</code>. The game ends when a person can no longer make a move and therefore the other person will be the winner.
 
-</blockquote>
+Write a function to determine if the starting player can guarantee a win.
+
+For example, given<span class="Apple-converted-space"> </span><code>s = "++++"</code>, return true. The starting player can guarantee a win by flipping the middle<span class="Apple-converted-space"> </span><code>"++"</code><span class="Apple-converted-space"> </span>to become<span class="Apple-converted-space"> </span><code>"+--+"</code>.
+
+<b>Follow up:</b>
+Derive your algorithm's runtime complexity.</blockquote>
 <!--more-->
 <strong>Analysis</strong>
-
+这道题我们可以使用上一题Flip Game的方法生成下一组可能的moves，然后递归调用本身来判断里面是否有对手一定不赢的情况（即最初回合先手必赢）。考虑到单纯暴力递归耗时太长，而且很多分支都是重复的，容易造成TLE，我们最好使用一个dict储存已经得到的结果，对递归树进行剪枝。代码如下。
 
 
 <strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.294.flip-game-ii.py" target="_blank">Code</a></strong>
- 
-<pre class="theme:sublime-text lang:python decode:true " title="Leetcode#293" data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.294.flip-game-ii.py" >
+<pre title="Leetcode#294" class="theme:sublime-text lang:python decode:true " data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.294.flip-game-ii.py">
+class Solution(object):
+    def __init__(self):
+        self.d = {}
+    def canWin(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        if s in self.d:
+            return self.d[s]
+        result = False
+        for i in xrange(len(s)-1):
+            if s[i:i+2] == '++' and not self.canWin(s[:i]+'--'+s[i+2:]):
+                result = True
+                break
+        self.d[s] = result
+        return result
 
-Please in backup code here!
 
-</pre> 
+</pre>
