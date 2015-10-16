@@ -1,6 +1,8 @@
 # [leetcode Algorithm Problems](https://leetcode.com/problemset/algorithms/)
 
-![progress](https://img.shields.io/badge/progress-276%20%2F%20276%20-green.svg)
+![progress](https://img.shields.io/badge/progress-277%20%2F%20277%20-green.svg)
+
+[294    Flip Game II    41.7%   Medium](https://leetcode.com/problems/flip-game-ii/)
 
 [293	Flip Game 	49.2%	Easy](https://leetcode.com/problems/flip-game/)
 
