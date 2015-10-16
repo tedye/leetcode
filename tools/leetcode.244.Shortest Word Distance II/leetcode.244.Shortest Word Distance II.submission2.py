@@ -1,0 +1,42 @@
+class WordDistance(object):
+    def __init__(self, words):
+        """
+        initialize your data structure here.
+        :type words: List[str]
+        """
+        self.d = {}
+        for i,word in enumerate(words):
+            if word not in self.d:
+                self.d[word] = [i]
+            else:
+                self.d[word].append(i)
+
+    def shortest(self, word1, word2):
+        """
+        Adds a word into the data structure.
+        :type word1: str
+        :type word2: str
+        :rtype: int
+        """
+        l1 = self.d[word1]
+        l2 = self.d[word2]
+        minDist = abs(l1[0] - l2[0])
+        i,j = 0,0
+        while i < len(l1) and j < len(l2):
+            if l1[i] < l2[j]:
+                minDist = min(minDist, l2[j] - l1[i])
+                i += 1
+            else:
+                minDist = min(minDist, l1[i] - l2[j])
+                j += 1
+            if minDist == 1:
+                break
+        return minDist
+            
+        
+
+
+# Your WordDistance object will be instantiated and called as such:
+# wordDistance = WordDistance(words)
+# wordDistance.shortest("word1", "word2")
+# wordDistance.shortest("anotherWord1", "anotherWord2")

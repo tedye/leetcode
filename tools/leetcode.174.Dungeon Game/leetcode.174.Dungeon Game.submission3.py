@@ -1,0 +1,22 @@
+class Solution:
+    # @param {integer[][]} dungeon
+    # @return {integer}
+    def calculateMinimumHP(self, dungeon):
+        w = len(dungeon[0])
+        h = len(dungeon)
+        hp = [[0] * w for x in range(h)]
+        
+        hp[h - 1][w - 1] = max(0, -dungeon[h - 1][w - 1]) + 1
+        
+        for x in range(h - 1, -1, -1):
+            for y in range(w - 1, -1, -1):
+                down = 0x7fffffff
+                right = 0x7fffffff
+                if x + 1 < h:
+                    down = max(1, hp[x + 1][y] - dungeon[x][y])
+                if y + 1 < w:
+                    right = max(1, hp[x][y + 1] - dungeon[x][y])
+                if down!=0x7fffffff or right!=0x7fffffff:
+                    hp[x][y] = min(down, right)
+        return hp[0][0]     
+        
