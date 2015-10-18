@@ -1,18 +1,16 @@
 # [leetcode Algorithm Problems](https://leetcode.com/problemset/algorithms/)
 
-![progress](https://img.shields.io/badge/progress-277%20%2F%20277%20-green.svg)
+[294    Flip Game II    41.7%   Medium](http://yefangliang.com/2015/10/16/leetcode-294-flip-game-ii/)
 
-[294    Flip Game II    41.7%   Medium](https://leetcode.com/problems/flip-game-ii/)
+[293	Flip Game 	49.2%	Easy](http://yefangliang.com/2015/10/16/leetcode-293-flip-game/)
 
-[293	Flip Game 	49.2%	Easy](https://leetcode.com/problems/flip-game/)
+[292	Nim Game	45.9%	Easy](http://yefangliang.com/2015/10/12/leetcode-292-nim-game/)
 
-[292	Nim Game	45.9%	Easy](http://leetcode/problems/nim-game/)
+[291	Word Pattern II 	30.1%	Hard](http://yefangliang.com/2015/10/12/leetcode-291-word-pattern-ii/)
 
-[291	Word Pattern II 	30.1%	Hard](http://leetcode/problems/word-pattern-ii/)
+[290	Word Pattern	26.2%	Easy](http://yefangliang.com/2015/10/12/leetcode-290-word-pattern/)
 
-[290	Word Pattern	26.2%	Easy](http://leetcode/problems/word-pattern/)
-
-[289	Game of Life	31.3%	Medium](http://leetcode/problems/game-of-life/)
+[289	Game of Life	31.3%	Medium](http://yefangliang.com/2015/10/12/leetcode-289-game-of-life/)
 
 [288	Unique Word Abbreviation 	16.8%	Easy](http://leetcode/problems/unique-word-abbreviation/)
 
