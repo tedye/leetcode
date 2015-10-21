@@ -1,5 +1,7 @@
 # [leetcode Algorithm Problems](https://leetcode.com/problemset/algorithms/)
 
+[295    Find Median from Data Stream    20.5%   Hard](https://leetcode.com/problems/find-median-from-data-stream/)
+
 [294    Flip Game II    41.7%   Medium](http://yefangliang.com/2015/10/16/leetcode-294-flip-game-ii/)
 
 [293	Flip Game 	49.2%	Easy](http://yefangliang.com/2015/10/16/leetcode-293-flip-game/)
