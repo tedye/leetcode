@@ -1,0 +1,74 @@
+<strong><a href="https://leetcode.com/problems/find-median-from-data-stream/" target="_blank">Question</a></strong>
+<blockquote>Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.
+
+Examples:<span class="Apple-converted-space"> </span>
+
+<code>[2,3,4]</code><span class="Apple-converted-space"> </span>, the median is<span class="Apple-converted-space"> </span><code>3</code>
+
+<code>[2,3]</code>, the median is<span class="Apple-converted-space"> </span><code>(2 + 3) / 2 = 2.5</code>
+
+Design a data structure that supports the following two operations:
+<ul>
+    <li>void addNum(int num) - Add a integer number from the data stream to the data structure.</li>
+    <li>double findMedian() - Return the median of all elements so far.</li>
+</ul>
+For example:
+<pre>add(1)
+add(2)
+findMedian() -&gt; 1.5
+add(3) 
+findMedian() -&gt; 2</pre>
+</blockquote>
+<!--more-->
+<strong>Analysis</strong>
+本题呢，主要是数据结构的设计。最简单暴力的方法当然是维护一个sorted list，addNum()就用binary search找到插入位置，findMedian()就分奇偶讨论返回中间那个值或者最中间的两个值的平均值。稍微想一想呢，可以考虑用BST来做，记录当前的左右分支node个数，每次都保证左支的node个数大于右支（invariant），在root上开始插入新数字，addNum前检查root和左孩子，通过rotateLeft或者rotateRight保持不变量。但是再仔细想想，其实不用BST，用一个max-heap和一个min-heap就行了，max-heap相当于左支，min-heap相当于右支，合起来就相当于一棵懒惰的BST。然后用来维护上面讨论的不变量即可。这里要注意python的heapq模块是min-heap，所以可以用负值来模拟max heap的效果。这样addNum的时间复杂度为O(logN)，而findMedian的时间复杂度为O(1), 总体的空间复杂度为O(N)。代码如下。
+
+<strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.295.find-median-from-data-stream.py" target="_blank">Code</a></strong>
+<pre title="Leetcode#294" class="theme:sublime-text lang:python decode:true " data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.295.find-median-from-data-stream.py">import heapq
+class MedianFinder:
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.maxHeap, self.minHeap = [],[]
+        self.N = 0
+        
+    def addNum(self, num):
+        """
+        Adds a num into the data structure.
+        :type num: int
+        :rtype: void
+        """
+        if self.N &amp; 1:
+            toMin = -1 * heapq.heappushpop(self.maxHeap, -1 * num)
+            heapq.heappush(self.minHeap, toMin)
+            self.N += 1
+        else:
+            heapq.heappush(self.maxHeap, -1 * num)
+            self.N += 1
+            if len(self.minHeap) == 0:
+                return
+            if -1 * self.maxHeap[0] &gt; self.minHeap[0]:
+                toMin = -1 * heapq.heappop(self.maxHeap)
+                toMax = heapq.heappop(self.minHeap)
+                heapq.heappush(self.maxHeap, -1*toMax)
+                heapq.heappush(self.minHeap, toMin)
+        
+    def findMedian(self):
+        """
+        Returns the median of current data stream
+        :rtype: float
+        """
+        if self.N&amp;1:
+            return -1.0 * self.maxHeap[0]
+        else:
+            return 0.5 * (-self.maxHeap[0] + self.minHeap[0])
+        
+
+# Your MedianFinder object will be instantiated and called as such:
+# mf = MedianFinder()
+# mf.addNum(1)
+# mf.findMedian()
+
+
+</pre>
