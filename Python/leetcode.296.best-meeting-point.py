@@ -22,8 +22,6 @@ class Solution(object):
             for j in range(len(grid[0])):
                 if grid[i][j]:
                     result += abs(v-i) + abs(h-j)
-        
-        print(v,h)
         return result
     
     def solveFor1D(self,l):
