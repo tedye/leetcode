@@ -1,6 +1,8 @@
 # [leetcode Algorithm Problems](https://leetcode.com/problemset/algorithms/)
 
-[295    Find Median from Data Stream    20.5%   Hard](https://leetcode.com/problems/find-median-from-data-stream/)
+[296    Best Meeting Point  38.9%   Medium](https://leetcode.com/problems/best-meeting-point/)
+
+[295    Find Median from Data Stream    20.5%   Hard](http://yefangliang.com/2015/10/22/leetcode-295-find-median-from-data-stream/)
 
 [294    Flip Game II    41.7%   Medium](http://yefangliang.com/2015/10/16/leetcode-294-flip-game-ii/)
 
