@@ -7,9 +7,9 @@ Leetcode Solutions for algorithm/database/shell exercises including [premium que
 
 If you are looking for explanantion, please visit my personal blog: [Ye's TreeHouse](http://yefangliang.com)
 
-Status as at Oct 20, 2015
+Status as at Oct 22, 2015
 
-![algorithm_python](https://img.shields.io/badge/algorithm_Python-278%20%2F%20278%20-green.svg)
+![algorithm_python](https://img.shields.io/badge/algorithm_Python-278%20%2F%20279%20-green.svg)
 ![algorithm_python](https://img.shields.io/badge/algorithm_CPP-0%20%2F%20277%20-red.svg)
 ![SQL](https://img.shields.io/badge/SQL-13%20%2F%2013%20-green.svg)
 ![Shell](https://img.shields.io/badge/Shell-4%20%2F%204%20-green.svg)
