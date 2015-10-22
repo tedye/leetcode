@@ -11,11 +11,8 @@ class Solution(object):
             for j in range(len(grid[0])):
                 if grid[i][j]:
                     vertical_list += i,
-        for j in range(len(grid[0])):
-            for i in range(len(grid)):
-                if grid[i][j]:
                     horizontal_list += j,
-                    
+        horizontal_list.sort()
         v,h = self.solveFor1D(vertical_list), self.solveFor1D(horizontal_list)
         result = 0
         for i in range(len(grid)):
@@ -26,11 +23,4 @@ class Solution(object):
     
     def solveFor1D(self,l):
         length = len(l)
-        if length & 1:
-            return l[length//2]
-        left = l[length//2 -1]
-        right= l[length//2]
-        if sum([left-n for n in l[:length//2]]) > sum([n - right for n in l[length//2:]]):
-            return left
-        else:
-            return right
+        return l[length//2]
