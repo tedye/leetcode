@@ -1,0 +1,68 @@
+<strong><a href="https://leetcode.com/problems/find-median-from-data-stream/" target="_blank">Question</a></strong>
+<blockquote>Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.
+
+Examples:<span class="Apple-converted-space"> </span>
+
+<code>[2,3,4]</code><span class="Apple-converted-space"> </span>, the median is<span class="Apple-converted-space"> </span><code>3</code>
+
+<code>[2,3]</code>, the median is<span class="Apple-converted-space"> </span><code>(2 + 3) / 2 = 2.5</code>
+
+Design a data structure that supports the following two operations:
+<ul>
+    <li>void addNum(int num) - Add a integer number from the data stream to the data structure.</li>
+    <li>double findMedian() - Return the median of all elements so far.</li>
+</ul>
+For example:
+<pre>add(1)
+add(2)
+findMedian() -&gt; 1.5
+add(3) 
+findMedian() -&gt; 2</pre>
+</blockquote>
+<!--more-->
+<strong>Analysis</strong>
+本题呢，主要是数据结构的设计。最简单暴力的方法当然是维护一个sorted list，addNum()就用binary search找到插入位置，findMedian()就分奇偶讨论返回中间那个值或者最中间的两个值的平均值。稍微想一想呢，可以考虑用BST来做，记录当前的左右分支node个数，每次都保证左支的node个数大于右支（invariant），在root上开始插入新数字，addNum前检查root和左孩子，通过rotateLeft或者rotateRight保持不变量。但是再仔细想想，其实不用BST，用一个max-heap和一个min-heap就行了，max-heap相当于左支，min-heap相当于右支，合起来就相当于一棵懒惰的BST。然后用来维护上面讨论的不变量即可。这里要注意python的heapq模块是min-heap，所以可以用负值来模拟max heap的效果。这样addNum的时间复杂度为O(logN)，而findMedian的时间复杂度为O(1), 总体的空间复杂度为O(N)。代码如下。
+
+<strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.295.find-median-from-data-stream.py" target="_blank">Code</a></strong>
+<pre title="Leetcode#294" class="theme:sublime-text lang:python decode:true " data-url="https://raw.githubusercontent.com/tedye/leetcode/master/Python/leetcode.295.find-median-from-data-stream.py"><strong><a href="https://leetcode.com/problems/best-meeting-point/" target="_blank">Question</a></strong>
+<blockquote>A group of two or more people wants to meet and minimize the total travel distance. You are given a 2D grid of values 0 or 1, where each 1 marks the home of someone in the group. The distance is calculated using<span class="Apple-converted-space"> </span><a href="http://en.wikipedia.org/wiki/Taxicab_geometry" target="_blank">Manhattan Distance</a>, where distance(p1, p2) =<span class="Apple-converted-space"> </span><code>|p2.x - p1.x| + |p2.y - p1.y|</code>.
+
+For example, given three people living at<span class="Apple-converted-space"> </span><code>(0,0)</code>,<span class="Apple-converted-space"> </span><code>(0,4)</code>, and<span class="Apple-converted-space"> </span><code>(2,2)</code>:
+<pre>1 - 0 - 0 - 0 - 1
+|   |   |   |   |
+0 - 0 - 0 - 0 - 0
+|   |   |   |   |
+0 - 0 - 1 - 0 - 0</pre>
+The point<span class="Apple-converted-space"> </span><code>(0,2)</code><span class="Apple-converted-space"> </span>is an ideal meeting point, as the total travel distance of 2+2+2=6 is minimal. So return 6.</blockquote>
+<!--more-->
+<strong>Analysis</strong>
+这题呢，看着是2D matrix，但是很容易看出其实这个问题等价于在一个数轴上找到和已有所有点距离和最小的那个点。在整数的情况下，很容易想到这个点就是median点。因为如果不是median的时候，你总可以往Median方向移动一个单位，使得数个数多的方向减少的距离之和大于数字少的方向增加的距离之和（这里距离之和其实就是数的个数，因为移动单位是1）。你可以一直向median移动，在median点到达距离和的最小值。在考虑下array里数的个数的奇偶性，为奇数的时候这个点就是median点，为偶数的时候，这个点就是median最近的两个点的随意一个。想到这里其实就很容易了。因为这个点必然是median点，那么距离之和就是这些点分布形成的区间套的range和。现在问题回到2D，怎么把2D问题map到1D的问题，其实很容易的，只要投影就行了。现在我们先扫一遍matrix，想象把它从上往下拍扁，看数字1分布的坐标，然后从左往右拍扁，记下1的分布坐标。然后就可以用我们在1D下得到的结论,一层一层的脱套，得到最小距离之和了。很容易看出时间复杂度和空间复杂度都是O(mn),即matrix本身的大小。代码如下。
+
+<strong><a href="https://github.com/tedye/leetcode/blob/master/Python/leetcode.296.best-meeting-point.py" target="_blank">Code</a></strong>
+<pre title="Leetcode#296" class="theme:sublime-text lang:python decode:true " >
+class Solution(object):
+    def minTotalDistance(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        # basically try to solve for median for 1D array twice
+        vertical_list = []
+        horizontal_list = []
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j]:
+                    vertical_list += i,
+                    horizontal_list += j,
+        horizontal_list.sort()
+        result = 0
+        start,end = 0,len(horizontal_list)-1
+        
+        while end -start >= 1:
+            result += vertical_list[end] - vertical_list[start]
+            result += horizontal_list[end] - horizontal_list[start]
+            end -= 1
+            start += 1
+        return result
+</pre>
+
