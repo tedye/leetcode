@@ -13,14 +13,8 @@ class Solution(object):
                     vertical_list += i,
                     horizontal_list += j,
         horizontal_list.sort()
-        v,h = self.solveFor1D(vertical_list), self.solveFor1D(horizontal_list)
         result = 0
-        for i in range(len(grid)):
-            for j in range(len(grid[0])):
-                if grid[i][j]:
-                    result += abs(v-i) + abs(h-j)
+        while len(vertical_list) > 1:
+            result += vertical_list.pop(-1) - vertical_list.pop(0)
+            result += horizontal_list.pop(-1) - horizontal_list.pop(0)
         return result
-    
-    def solveFor1D(self,l):
-        length = len(l)
-        return l[length//2]
