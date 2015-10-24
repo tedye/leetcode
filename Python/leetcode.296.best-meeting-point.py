@@ -14,7 +14,11 @@ class Solution(object):
                     horizontal_list += j,
         horizontal_list.sort()
         result = 0
-        while len(vertical_list) > 1:
-            result += vertical_list.pop(-1) - vertical_list.pop(0)
-            result += horizontal_list.pop(-1) - horizontal_list.pop(0)
+        start,end = 0,len(horizontal_list)-1
+        
+        while end -start >= 1:
+            result += vertical_list[end] - vertical_list[start]
+            result += horizontal_list[end] - horizontal_list[start]
+            end -= 1
+            start += 1
         return result
